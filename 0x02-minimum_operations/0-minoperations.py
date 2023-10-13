@@ -19,14 +19,17 @@ def minOperations(n):
 
     lowest = num = n
     result = (0, 0)
+    impossible = True
     while True:
         result = tryOperations(n, num, text=text)
+        impossible = result[2]
         num -= 1
         if num <= 0:
             break
         if len(result[1]) == n:
             lowest = result[0]
-
+    if impossible:
+        return 0
     return lowest
 
 
@@ -54,17 +57,21 @@ def tryOperations(text_len, ops_range, text):
     """
     copy_pasted_text = text
     num_of_ops = 0
+    impossible = False
 
     for i in range(ops_range):
         if num_of_ops >= text_len or len(copy_pasted_text) == text_len:
+            if num_of_ops >= text_len:
+                impossible = True
             break
         copied_text = copyOp(copy_pasted_text)
         num_of_ops += 1
 
         for n in range(ops_range):
             if len(copy_pasted_text) == text_len:
+                impossible = False
                 break
             copy_pasted_text = pasteOp(copied_text, copy_pasted_text)
             num_of_ops += 1
 
-    return (num_of_ops, copy_pasted_text)
+    return (num_of_ops, copy_pasted_text, impossible)
