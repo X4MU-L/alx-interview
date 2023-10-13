@@ -14,13 +14,17 @@ def minOperations(n):
     """
     text = "H"
 
+    if n <= 0:
+        return 0
+
     lowest = num = n
+    result = (0, 0)
     while True:
         result = tryOperations(n, num, text=text)
         num -= 1
         if num <= 0:
             break
-        if result[0] <= lowest and len(result[1]) == n:
+        if len(result[1]) == n:
             lowest = result[0]
 
     return lowest
