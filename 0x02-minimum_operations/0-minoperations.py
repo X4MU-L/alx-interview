@@ -22,7 +22,8 @@ def minOperations(n):
     impossible = True
     while True:
         result = tryOperations(n, num, text=text)
-        impossible = result[2]
+        if not result[2]:
+            impossible = result[2]
         num -= 1
         if num <= 0:
             break
