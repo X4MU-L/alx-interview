@@ -16,7 +16,7 @@ def display_metrics():
     """displays the metrics information in a format"""
     print("File size: {}".format(total_size))
     for key in sorted(result):
-        print(f"{key}: {result[key]}")
+        print("{}: {}".format(key, result[key]))
 
 
 def sigint_handler(signum, frame):
@@ -48,6 +48,6 @@ for line in sys.stdin:
                 else:
                     result[status_code] += 1
             except Exception as e:
-                continue
+                pass
     except IndexError:
-        continue
+        pass
