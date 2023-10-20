@@ -1,53 +1,51 @@
 #!/usr/bin/python3
 """
-    this script reads from stdin line by line and computes metrics
+   This script reads from the stdin line by line and computes metrics.
 """
-
-
 import sys
 import signal
 
-
-total_size = 0
 result = {}
+total_size = 0
 
 
-def display_metrics():
-    """displays the metrics information in a format"""
+def display_stats():
+    """Displays statistics"""
     print("File size: {}".format(total_size))
     for key in sorted(result):
         print(f"{key}: {result[key]}")
 
 
-def sigint_handler(signum, frame):
-    """handles a sigint signal"""
-    display_metrics()
+def handler(signum, frame):
+    """Handles a signal gracefully."""
+    display_stats()
     exit(1)
 
 
-signal.signal(signal.SIGINT, sigint_handler)
-valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
+signal.signal(signal.SIGINT, handler)
+valid_status_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
 count = 0
 
 
 for line in sys.stdin:
     if count == 10:
         count = 1
-        display_metrics()
+        display_stats()
     else:
         count += 1
 
     try:
         line = line.split()
         status_code, file_size = line[-2], line[-1]
-        if status_code in valid_codes:
+
+        if status_code in valid_status_codes:
             try:
                 total_size += int(file_size)
-                if status_code not in result:
-                    result[status_code] = 1
-                else:
-                    result[status_code] += 1
             except Exception as e:
                 continue
+            if status_code not in result:
+                result[status_code] = 1
+            else:
+                result[status_code] += 1
     except IndexError:
         continue
