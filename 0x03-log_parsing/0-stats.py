@@ -29,7 +29,8 @@ def sigint_handler(signum, frame):
 signal.signal(signal.SIGINT, sigint_handler)
 valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
 count = 0
-log_entry_pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "GET ([^"]+)" (\d+) (\d+)'
+log_entry_pattern = \
+    r'(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "GET ([^"]+)" (\d+) (\d+)'
 
 
 for line in sys.stdin:
