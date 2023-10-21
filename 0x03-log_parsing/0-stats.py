@@ -51,3 +51,5 @@ for line in sys.stdin:
                 pass
     except IndexError:
         pass
+
+display_metrics()
