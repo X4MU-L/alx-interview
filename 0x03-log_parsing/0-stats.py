@@ -5,6 +5,7 @@
 
 
 import sys
+import re
 import signal
 
 
@@ -28,6 +29,7 @@ def sigint_handler(signum, frame):
 signal.signal(signal.SIGINT, sigint_handler)
 valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
 count = 0
+log_entry_pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "GET ([^"]+)" (\d+) (\d+)'
 
 
 for line in sys.stdin:
@@ -37,8 +39,9 @@ for line in sys.stdin:
     else:
         count += 1
 
-    try:
-        line = line.split()
+    match = re.match(log_entry_pattern, line)
+    if match:
+        line = match.groups()
         status_code, file_size = line[-2], line[-1]
         if status_code in valid_codes:
             try:
@@ -49,7 +52,5 @@ for line in sys.stdin:
                     result[status_code] += 1
             except Exception as e:
                 pass
-    except IndexError:
-        pass
 
 display_metrics()
