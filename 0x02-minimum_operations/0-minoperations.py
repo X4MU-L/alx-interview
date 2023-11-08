@@ -14,7 +14,7 @@ def minOperations(n):
     """
     text = "H"
 
-    if n <= 0 or n == float("inf"):
+    if n <= 1 or n == float("inf"):
         return 0
 
     lowest = num = n
