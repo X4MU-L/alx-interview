@@ -5,17 +5,18 @@ rotate a 2D array in place anticlockwise
 
 
 def rotate_2d_matrix(matrix):
-    endStart = len(matrix[0]) - 1
-
-    for _ in range(len(matrix[0]) // 2):
-        for r in range(endStart, 0, -1):
-            endStartNum = matrix[endStart - r][endStart]
-            endEndNum = matrix[endStart][r]
-            firstLast = matrix[r][endStart - endStart]
-            matrix[endStart - r][endStart] =\
-                matrix[endStart - endStart][endStart - r]
-            matrix[endStart][r] = endStartNum
-            matrix[r][endStart - endStart] = endEndNum
-            matrix[endStart - endStart][endStart - r] = firstLast
-
-        endStart -= 1
+    array_len = len(matrix)
+    for layer in range(array_len // 2):
+        first = layer
+        last = array_len - 1 - layer
+        for i in range(first, last):
+            offset = i - first
+            top_value = matrix[first][i]
+            # swap the last with top
+            matrix[first][i] = matrix[last - offset][first]
+            # swap the bottom with last
+            matrix[last - offset][first] = matrix[last][last - offset]
+            # swap the right with bottom
+            matrix[last][last - offset] = matrix[i][last]
+            # swap the top with right
+            matrix[i][last] = top_value
