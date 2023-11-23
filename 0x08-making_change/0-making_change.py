@@ -39,7 +39,13 @@ def makeChange(coins: list, total: int) -> int:
         coins: list of non-negative numbers
         total: int
     """
-    if total <= 0:
+    if not isinstance(coins, list):
         return -1
+    if total <= 0:
+        return 0
+
     coins.sort()
+    if coins[0] > total:
+        return -1
+   
     return recurseChange(coins, total, 0)
