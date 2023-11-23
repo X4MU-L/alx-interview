@@ -42,5 +42,7 @@ def makeChange(coins: list, total: int) -> int:
     if total <= 0:
         return 0
 
+    if not isinstance(coins, list):
+        return -1
     coins.sort()
     return recurseChange(coins, total, 0)
