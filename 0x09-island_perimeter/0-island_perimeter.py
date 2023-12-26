@@ -23,23 +23,18 @@ def island_perimeter(grid):
                     # left side
                     if lst[land_idx - 1] == 0:
                         counter += 1
-
-
                     counter += 1
                 else:
 
                     if lst[land_idx - 1] == 0:
                         counter += 1
 
-
                     if lst[land_idx + 1] == 0:
                         counter += 1
-
 
                 if lst_idx == 0:
 
                     counter += 1
-
 
                     if grid[lst_idx + 1][land_idx] == 0:
                         counter += 1
@@ -47,7 +42,6 @@ def island_perimeter(grid):
 
                     if grid[lst_idx - 1][land_idx] == 0:
                         counter += 1
-
 
                     counter += 1
                 else:
